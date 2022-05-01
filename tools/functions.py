@@ -10,6 +10,29 @@ from tools.secretkey_generator import create_secret_key
 JWT_SECRET_KEY = create_secret_key(128)
 
 
+def verify_data(data, datatype):
+    symbols = 'qwertyuiopasdfghjklzxcvbnm0123456789_-'
+    email_symbols = symbols + '.@'
+    password_symbols = symbols + '.@!#$%^&*(),/'
+    if len(data) < 64 and data:
+        if datatype == 'email':
+            if '@' not in data:
+                return False
+            for el in data:
+                if el not in email_symbols:
+                    return False
+        elif datatype == 'username':
+            for el in data:
+                if el not in symbols:
+                    return False
+        elif datatype == 'password':
+            for el in data:
+                if el not in password_symbols:
+                    return False
+        return True
+    return False
+
+
 def abort_if_not_found(entity, entity_id):
     session = db_session.create_session()
     news = session.query(entity).get(entity_id)

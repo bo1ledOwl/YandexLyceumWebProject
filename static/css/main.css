@@ -4,14 +4,16 @@ body {
 }
 
 header {
+    text-align: left;
     display: block;
     width: 100%;
-    padding: 1em;
+    padding: 1em 3em 1em 5em;
     background: lightgray;
 }
 
 a {
     cursor: pointer;
+    transition-duration: .15s;
     margin-top: 0;
     margin-bottom: 0;
     padding: 1em;
@@ -24,4 +26,53 @@ a:hover {
 #content {
     margin-left: 1em;
     margin-top: 1em;
+}
+
+.auth-form {
+    text-align: center;
+    margin-top: 2em;
+    padding: 2em 5em 2em 5em;
+    border: 2px lightgray solid;
+    background-color: lightgray;
+    border-radius: 5px;
+    width: min-content;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap;
+}
+
+.auth-form input, button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: .5em;
+    background-color: white;
+    border-radius: 5px;
+    padding: .3em;
+}
+
+.auth-form button {
+    transition-duration: .15s;
+}
+
+.auth-form button:hover {
+    background-color: lightgray;
+}
+
+.form-error {
+    display: block;
+    margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgb(255, 63, 63);
+}
+
+#left, #right{
+    display: inline-block;
+}
+
+#right {
+    float: right;
+    margin-right: 10%;
 }
