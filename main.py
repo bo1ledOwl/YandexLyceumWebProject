@@ -1,23 +1,32 @@
-from api.users import RegisterResource, LoginResource
-
 from flask import Flask
+from flask_jwt_simple import JWTManager, get_jwt_identity
 from flask_restful import Api
+
+from api.posts import PostResource, PostListResource, PostCreationResource
+from api.users import RegisterResource, LoginResource, UserResource
 
 from db_data import db_session
 
 app = Flask(__name__)
+app.config.from_pyfile('config.py')
 api = Api(app)
 
+INCLUDED_PATHS = ('', 'login', 'register', 'user', 'posts')
 
-@app.route('/')
-@app.route('/login/')
-@app.route('/register/')
-def index():
-    return app.send_static_file("html/main.html")
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>/')
+def index(path):
+    if not path.startswith('api/') and path.split('/')[0] in INCLUDED_PATHS:
+        return app.send_static_file("html/main.html")
 
 
 if __name__ == '__main__':
     db_session.global_init("db/db.sqlite")
     api.add_resource(RegisterResource, '/api/register/')
     api.add_resource(LoginResource, '/api/login/')
+    api.add_resource(UserResource, '/api/user/<int:user_id>/')
+    api.add_resource(PostResource, '/api/post/<int:post_id>/')
+    api.add_resource(PostListResource, '/api/posts/<int:user_id>/<int:from_number>/<int:amount>/')
+    api.add_resource(PostCreationResource, '/api/posts/create_post/')
     app.run(host="127.0.0.1", port=8080)

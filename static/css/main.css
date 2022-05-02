@@ -8,19 +8,23 @@ header {
     display: block;
     width: 100%;
     padding: 1em 3em 1em 5em;
-    background: lightgray;
+    background: rgb(167, 167, 167);
 }
 
 a {
     cursor: pointer;
     transition-duration: .15s;
+}
+
+header a {
     margin-top: 0;
     margin-bottom: 0;
     padding: 1em;
+    height: 100%;
 }
 
-a:hover {
-    background-color: gray;
+header a:hover {
+    background-color: rgb(220, 220, 220);
 }
 
 #content {
@@ -28,7 +32,7 @@ a:hover {
     margin-top: 1em;
 }
 
-.auth-form {
+.auth-form, #post-creation-form {
     text-align: center;
     margin-top: 2em;
     padding: 2em 5em 2em 5em;
@@ -52,11 +56,11 @@ a:hover {
     padding: .3em;
 }
 
-.auth-form button {
+.auth-form button, #post-creation-form button {
     transition-duration: .15s;
 }
 
-.auth-form button:hover {
+.auth-form button:hover, #post-creation-form button:hover {
     background-color: lightgray;
 }
 
@@ -75,4 +79,60 @@ a:hover {
 #right {
     float: right;
     margin-right: 10%;
+}
+
+#user-data {
+    float: left;
+    display: block;
+    border-radius: 10px;
+    background-color: lightgray;
+    width: 20%;
+    padding: 1em 1em 1em 3em;
+    white-space: nowrap;
+}
+
+#posts-list {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+    background-color: lightgray;
+    border-radius: 10px;
+    width: 40%;
+}
+
+#post-creation-form textarea {
+    width: 80em;
+    height: 40em;
+    resize: none;
+    border-radius: 10px;
+    padding: 1em;
+    background-color: rgb(240, 240, 240);
+}
+
+.post {
+    text-align: left;
+}
+
+.post-creator-data {
+    background-color: gray;
+    padding: 1em;
+    border-radius: 10px;
+    width: inherit;
+    color: white;
+}
+
+.post-creator-data a {
+    padding: .5em;
+    border-radius: 5px;
+}
+
+.post-creator-data a:hover {
+    background-color: lightgray;
+    color: black;
+}
+
+.post p {
+    margin-left: 1.2em;
+    margin-right: 1em;
 }

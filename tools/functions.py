@@ -1,13 +1,12 @@
 from datetime import datetime, timedelta
 
-from flask import make_response, jsonify
+from flask import make_response, jsonify, request
 from flask_restful import abort
 import jwt
+from jwt import InvalidSignatureError
 
+import config
 from db_data import db_session
-from tools.secretkey_generator import create_secret_key
-
-JWT_SECRET_KEY = create_secret_key(128)
 
 
 def verify_data(data, datatype):
@@ -33,21 +32,30 @@ def verify_data(data, datatype):
     return False
 
 
-def abort_if_not_found(entity, entity_id):
+def abort_if_not_found(entity, entity_id, entity_class_name=''):
     session = db_session.create_session()
-    news = session.query(entity).get(entity_id)
-    if not news:
-        abort(404, message=f"Entity {type(entity)} by id {entity_id} not found")
+    data = session.query(entity).get(entity_id)
+    if not data:
+        abort(404,
+              message=f"Entity{(' ' + entity_class_name + ' ') * bool(entity_class_name)}by id {entity_id} not found")
 
 
 def make_resp(message, status):
     response = make_response(message, status)
-    response.headers['content-type'] = 'application/json; charset=utf-s'
+    response.headers['content-type'] = 'application/json; charset=utf-8'
     return response
 
 
 def make_jwt_resp(user):
     token = {'token': jwt.encode(
         {'iat': datetime.now(), 'exp': datetime.now() + timedelta(days=7), 'id': user.id, 'name': user.name},
-        JWT_SECRET_KEY, algorithm='HS256')}
+        config.JWT_SECRET_KEY, algorithm='HS256')}
     return make_resp(jsonify(token), 200)
+
+
+def verify_token():
+    try:
+        jwt.decode(request.headers['Authentication'], config.JWT_SECRET_KEY, algorithms='HS256')
+        return True
+    except InvalidSignatureError:
+        return False
