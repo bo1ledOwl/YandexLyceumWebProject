@@ -18,7 +18,7 @@ class RegisterResource(Resource):
         name = args['username']
         email = args['email']
         password = args['password']
-        if list(map(lambda data: verify_data(data[0], data[1]),
+        if list(map(lambda data: verify_data(data[0], data[1]),  # проверка присланных полей
                     ((name, 'username'), (email, 'email'), (password, 'password')))):
             sess = db_session.create_session()
             if sess.query(User).filter(User.email == email).first() is not None:
@@ -34,10 +34,11 @@ class RegisterResource(Resource):
 
 
 class LoginResource(Resource):
-    def get(self):
-        if verify_token():
+    def get(self):  # при первом входе на страницу пользователь проверяет, действителен ли его токен
+        token = verify_token()
+        if token:
             sess = db_session.create_session()
-            if sess.query(User).get(jwt.decode(request.headers['Authentication'], JWT_SECRET_KEY, algorithms='HS256')['id']):
+            if sess.query(User).get(token['id']):
                 return make_resp(jsonify({'message': 'token is verified'}), 200)
             return make_resp(jsonify({'message': 'user not found'}), 400)
         return make_resp(jsonify({'message': 'invalid token'}), 400)
@@ -49,6 +50,7 @@ class LoginResource(Resource):
         args = parser.parse_args()
         email = args['email']
         password = args['password']
+        # проверка присланных данных
         if list(map(lambda data: verify_data(data[0], data[1]), ((email, 'email'), (password, 'password')))):
             sess = db_session.create_session()
             user = sess.query(User).filter(User.email == email).first()

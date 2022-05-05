@@ -13,7 +13,6 @@ header {
 
 a {
     cursor: pointer;
-    transition-duration: .15s;
 }
 
 header a {
@@ -36,8 +35,8 @@ header a:hover {
     text-align: center;
     margin-top: 2em;
     padding: 2em 5em 2em 5em;
-    border: 2px lightgray solid;
-    background-color: lightgray;
+    border: 2px #d3d3d3 solid;
+    background-color: #d3d3d3;
     border-radius: 5px;
     width: min-content;
     display: block;
@@ -46,22 +45,22 @@ header a:hover {
     white-space: nowrap;
 }
 
-.auth-form input, button {
+.auth-form input, .auth-form button {
     display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: .5em;
-    background-color: white;
+    background-color: #ffffff;
     border-radius: 5px;
     padding: .3em;
 }
 
-.auth-form button, #post-creation-form button {
+.auth-form button, #post-creation-form button, .post-creator-data, a, button {
     transition-duration: .15s;
 }
 
 .auth-form button:hover, #post-creation-form button:hover {
-    background-color: lightgray;
+    background-color: #d3d3d3;
 }
 
 .form-error {
@@ -85,20 +84,10 @@ header a:hover {
     float: left;
     display: block;
     border-radius: 10px;
-    background-color: lightgray;
+    background-color: #d3d3d3;
     width: 20%;
     padding: 1em 1em 1em 3em;
     white-space: nowrap;
-}
-
-#posts-list {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 1em;
-    background-color: lightgray;
-    border-radius: 10px;
-    width: 40%;
 }
 
 #post-creation-form textarea {
@@ -110,16 +99,39 @@ header a:hover {
     background-color: rgb(240, 240, 240);
 }
 
+#post-creation-form button {
+    border-radius: 10px;
+    padding: 1em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    background-color: rgb(240, 240, 240);
+}
+
+#posts-list {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+    border-radius: 10px;
+    width: 40%;
+}
+
 .post {
     text-align: left;
+    background-color: #d3d3d3;
+    padding: 1em;
+    border-radius: 10px;
+    margin-bottom: 1em;
 }
 
 .post-creator-data {
-    background-color: gray;
+    background-color: rgb(138, 138, 138);
     padding: 1em;
     border-radius: 10px;
     width: inherit;
-    color: white;
+    color: #ffffff;
 }
 
 .post-creator-data a {
@@ -127,12 +139,39 @@ header a:hover {
     border-radius: 5px;
 }
 
-.post-creator-data a:hover {
-    background-color: lightgray;
-    color: black;
+.post-creator-data:hover {
+    background-color: rgb(63, 63, 63);
 }
 
 .post p {
     margin-left: 1.2em;
     margin-right: 1em;
+}
+
+#load-more {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: .6em;
+    background-color: rgb(211, 211, 211);
+    border-radius: 10px;
+}
+
+#load-more:hover {
+    background-color: rgb(234, 234, 234);
+}
+
+.delete-button {
+    background-color: rgb(241, 241, 241);
+    margin: 0;
+    border-style: none;
+    width: inherit;
+    padding: .45em;
+    border-radius: 5px;
+    color: rgb(103, 103, 103);
+}
+
+.delete-button:hover {
+    background-color: rgb(224, 110, 110);
+    color: #ffffff;
 }

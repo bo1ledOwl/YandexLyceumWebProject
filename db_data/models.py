@@ -1,6 +1,6 @@
 import datetime
-import sqlalchemy
-from sqlalchemy import orm
+from sqlalchemy import Integer, String, Column, ForeignKey, DateTime, Text
+from sqlalchemy.orm import relation
 from werkzeug.security import generate_password_hash, check_password_hash
 from .db_session import SqlAlchemyBase
 
@@ -8,13 +8,13 @@ from .db_session import SqlAlchemyBase
 class User(SqlAlchemyBase):
     __tablename__ = 'users'
 
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
-    name = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    email = sqlalchemy.Column(sqlalchemy.String, index=True, unique=True, nullable=False)
-    hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    reg_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String, nullable=False)
+    email = Column(String, index=True, unique=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    reg_date = Column(DateTime, default=datetime.datetime.now)
 
-    posts = orm.relation("Post", back_populates='user')
+    posts = relation("Post", back_populates='user')
 
     def to_dict(self):
         return {'id': self.id, 'name': self.name, 'email': self.email, 'reg_date': self.reg_date}
@@ -29,12 +29,12 @@ class User(SqlAlchemyBase):
 class Post(SqlAlchemyBase):
     __tablename__ = 'posts'
 
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
-    content = sqlalchemy.Column(sqlalchemy.Text, nullable=False)
-    creation_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    content = Column(Text, nullable=False)
+    creation_date = Column(DateTime, default=datetime.datetime.now)
 
-    user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'))
-    user = orm.relation('User')
+    user_id = Column(Integer, ForeignKey('users.id'))
+    user = relation('User')
 
     def to_dict(self):
         return {'id': self.id, 'content': self.content, 'creation_date': self.creation_date, 'user_id': self.user_id,

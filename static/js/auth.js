@@ -1,62 +1,47 @@
 var user_data = {};
 var token = '';
 
-function parseJwt(token) {
-  var base64Url = token.split('.')[1];
-  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
-
-  return JSON.parse(jsonPayload);
-};
-
-function verify_data(data, type) {
+function verify_data(data, type) {  // проверка данных как в functions.py
   const symbols = 'qwertyuiopasdfghjklzxcvbnm0123456789_-'
   const email_symbols = symbols + '.@'
   const password_symbols = symbols + '.@!#$%^&*(),/'
+  const posts_symbols = password_symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю'
   if (data.length < 64 && data != '') {
     if (type == 'email') {
-      for (var i = 0; i < data.length; i++) {
-        if (!email_symbols.includes(data[i])) { return false; };
-      }
-      if (!data.includes('@')) { return false; };
+      for (var i = 0; i < data.length; i++) if (!email_symbols.includes(data[i])) return false;
+      if (!data.includes('@')) return false;;
     }
-    else if (type == 'username') {
-      for (var i = 0; i < data.length; i++) {
-        if (!symbols.includes(data[i])) { return false; };
-      }
-    }
-    else if (type == 'password') {
-      for (var i = 0; i < data.length; i++) {
-        if (!password_symbols.includes(data[i])) { return false; };
-      };
-    };
+    else if (type == 'username') for (var i = 0; i < data.length; i++) if (!symbols.includes(data[i])) return false;
+    else if (type == 'password') for (var i = 0; i < data.length; i++) if (!password_symbols.includes(data[i])) return false;
+    else if (type == 'post') for (var i = 0; i < data.length; i++) if (!posts_symbols.includes(data[i])) return false;
     return true;
   }
   return false;
 }
 
-function login_page(error = '', email = '') {
-  document.title = 'Вход';
-  window.history.pushState('', "Вход", "/login/");
-  header.innerHTML = `
+function login_page(error = '', email = '') {  // страница входа
+  if (user_data['name'] === undefined) {  // уже вошедшие пользователи не допускаются
+    document.title = 'Вход';
+    window.history.pushState('', "Вход", "/login/");
+    header.innerHTML = `
     <a onclick="register_page()">Регистрация</a>`
-  content_container.innerHTML = `
+    content_container.innerHTML = `
     <div class="auth-form">
     <input name="email" placeholder="Адрес почты" value="${email}">
     <input name="password" placeholder="Пароль" type="password">
     <button onclick="login()">Войти</button>
     <div class="form-error">${error}</div>
     </div>`;
+  }
 }
 
-function register_page(error = '', name = '') {
-  document.title = 'Регистрация';
-  window.history.pushState('', "Регистрация", "/register/");
-  header.innerHTML = `
+function register_page(error = '', name = '') {  // страница регистрации
+  if (user_data['name'] === undefined) {  // уже вошедшие пользователи не допускаются
+    document.title = 'Регистрация';
+    window.history.pushState('', "Регистрация", "/register/");
+    header.innerHTML = `
     <a onclick="login_page()">Вход</a>`
-  content_container.innerHTML = `
+    content_container.innerHTML = `
     <div class="auth-form">
     <input name="username" placeholder="Имя пользователя" value="${name}">
     <input name="email" placeholder="Почта">
@@ -64,10 +49,12 @@ function register_page(error = '', name = '') {
     <button onclick="register()">Зарегистрироваться</button>
     <div class="form-error">${error}</div>
     </div>`;
+  }
 }
 
-function login() {
-  if (user_data['name'] === undefined) {
+
+function login() {  // запрос для входа
+  if (user_data['name'] === undefined) {  // уже вошедшие пользователи не допускаются
     let email = document.getElementsByName('email')[0].value;
     let password = document.getElementsByName('password')[0].value;
     if (verify_data(email, 'email') && verify_data(password, 'password')) {
@@ -81,8 +68,8 @@ function login() {
           password: password
         }),
       }).then((res) => {
-        res.json().then((data) => {
-          if (data['message'] !== undefined) { login_page('Неверный логин или пароль', email) }
+        res.json().then((data) => {  // проверка ответа от сервера
+          if (data['message'] !== undefined) login_page('Неверный логин или пароль', email);
           else {
             save_user_data(data);
             index_page();
@@ -90,14 +77,12 @@ function login() {
         });
       });
     }
-    else {
-      login_page('Недопустимые данные', email)
-    }
+    else login_page('Недопустимые данные', email);
   }
 }
 
-function register() {
-  if (user_data['name'] === undefined) {
+function register() {  // запрос для регистрации
+  if (user_data['name'] === undefined) {  // уже вошедшие пользователи не допускаются
     let name = document.getElementsByName('username')[0].value;
     let email = document.getElementsByName('email')[0].value;
     let password = document.getElementsByName('password')[0].value;
@@ -114,8 +99,8 @@ function register() {
           password: password
         }),
       }).then((res) => {
-        res.json().then((data) => {
-          if (data['message'] !== undefined) { register_page('Пользователь с таким адресом электронной почты уже существует', name) }
+        res.json().then((data) => {  // проверка ответа от сервера
+          if (data['message'] !== undefined) register_page('Пользователь с таким адресом электронной почты уже существует', name);
           else {
             save_user_data(data);
             index_page();
@@ -123,13 +108,11 @@ function register() {
         });
       });
     }
-    else {
-      register_page('Недопустимые данные', name)
-    }
+    else register_page('Недопустимые данные', name);
   }
 }
 
-function logout() {
+function logout() {  // удаление сохранённых данных о пользователе
   document.cookie = `token=${token}; path=/; max-age: -1; secure`;
   token = '';
   document.cookie = `path=/; max-age: -1; secure`;

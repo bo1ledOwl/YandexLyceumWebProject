@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_jwt_simple import JWTManager, get_jwt_identity
 from flask_restful import Api
 
 from api.posts import PostResource, PostListResource, PostCreationResource
@@ -8,12 +7,12 @@ from api.users import RegisterResource, LoginResource, UserResource
 from db_data import db_session
 
 app = Flask(__name__)
-app.config.from_pyfile('config.py')
 api = Api(app)
 
 INCLUDED_PATHS = ('', 'login', 'register', 'user', 'posts')
 
 
+# необходимо, чтобы любой путь обрабатывался и выдавал один и тот же результат в силу реализации отображения
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>/')
 def index(path):
