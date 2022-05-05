@@ -1,1 +1,3 @@
-JWT_SECRET_KEY = '5d381b476fa6011bc975314732d95ff596dbae008f64a4895163465d48e8c35a'
+import secrets
+
+JWT_SECRET_KEY = secrets.token_urlsafe(64)
