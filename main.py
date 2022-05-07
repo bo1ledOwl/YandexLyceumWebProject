@@ -28,4 +28,4 @@ if __name__ == '__main__':
     api.add_resource(PostResource, '/api/post/<int:post_id>/')
     api.add_resource(PostListResource, '/api/posts/<int:user_id>/<int:from_number>/<int:amount>/')
     api.add_resource(PostCreationResource, '/api/posts/create_post/')
-    app.run(host="127.0.0.1", port=80)
+    app.run(host="yl-posty.herokuapp.com", port=80)
