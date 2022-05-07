@@ -1,8 +1,6 @@
-import jwt
-from flask import jsonify, request
+from flask import jsonify
 from flask_restful import Resource, abort, reqparse
 
-from config import JWT_SECRET_KEY
 from db_data import db_session
 from db_data.models import User
 from tools.functions import make_jwt_resp, verify_data, abort_if_not_found, make_resp, verify_token
