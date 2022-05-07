@@ -15,6 +15,8 @@ def verify_data(data, datatype):  # проверка данных на допу�
     password_symbols = symbols + '.@!#$%^&*(),/?'
     username_symbols = symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю'
     posts_symbols = password_symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю'
+
+    data = data.lower()
     if len(data) < 64 and data:
         if datatype == 'email':
             if '@' not in data:

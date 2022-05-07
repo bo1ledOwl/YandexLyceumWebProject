@@ -7,6 +7,7 @@ function verify_data(data, type) {  // проверка данных как в f
   const password_symbols = symbols + '.@!#$%^&*(),/'
   const username_symbols = symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю'
   const posts_symbols = password_symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю'
+  let data = data.toLowerCase()
   if (data.length < 64 && data != '') {
     if (type == 'email') {
       for (var i = 0; i < data.length; i++) if (!email_symbols.includes(data[i])) return false;
