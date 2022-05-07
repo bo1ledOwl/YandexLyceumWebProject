@@ -29,6 +29,7 @@ function get_posts(user_id = 0, amount = 15) {  // запрос на получ�
             loaded_posts = -1;
             loading_button.style.display = 'none';
           }
+          else loading_button.style.display = 'block';
         }
         else {
           loaded_posts = -1;

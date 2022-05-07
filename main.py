@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_restful import Api
-from waitress import serve
 
 from api.posts import PostResource, PostListResource, PostCreationResource
 from api.users import RegisterResource, LoginResource, UserResource
