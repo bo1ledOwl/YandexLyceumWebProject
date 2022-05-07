@@ -5,13 +5,14 @@ function verify_data(data, type) {  // проверка данных как в f
   const symbols = 'qwertyuiopasdfghjklzxcvbnm0123456789_-'
   const email_symbols = symbols + '.@'
   const password_symbols = symbols + '.@!#$%^&*(),/'
+  const username_symbols = symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю'
   const posts_symbols = password_symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю'
   if (data.length < 64 && data != '') {
     if (type == 'email') {
       for (var i = 0; i < data.length; i++) if (!email_symbols.includes(data[i])) return false;
-      if (!data.includes('@')) return false;;
+      if (!data.includes('@')) return false;
     }
-    else if (type == 'username') for (var i = 0; i < data.length; i++) if (!symbols.includes(data[i])) return false;
+    else if (type == 'username') for (var i = 0; i < data.length; i++) if (!username_symbols.includes(data[i])) return false;
     else if (type == 'password') for (var i = 0; i < data.length; i++) if (!password_symbols.includes(data[i])) return false;
     else if (type == 'post') for (var i = 0; i < data.length; i++) if (!posts_symbols.includes(data[i])) return false;
     return true;

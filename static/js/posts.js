@@ -2,7 +2,7 @@ var loaded_posts = 0;
 var displayed_posts = 0;
 
 
-function get_posts(user_id = 0, amount = 2) {  // запрос на получение постов и их отображение
+function get_posts(user_id = 0, amount = 15) {  // запрос на получение постов и их отображение
   if (loaded_posts > -1) {
     fetch(`${String(window.origin).split('/').slice(0, 3).join('/')}/api/posts/${user_id}/${loaded_posts}/${amount}/`, {
       method: "GET",
