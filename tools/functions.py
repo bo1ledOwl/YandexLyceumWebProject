@@ -12,7 +12,7 @@ from db_data import db_session
 def verify_data(data, datatype):  # проверка данных на допустимые символы (как в auth.js)
     symbols = 'qwertyuiopasdfghjklzxcvbnm0123456789_-'
     email_symbols = symbols + '.@'
-    password_symbols = symbols + '.@!#$%^&*(),/'
+    password_symbols = symbols + '.@!#$%^&*(),/?'
     posts_symbols = password_symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю'
     if len(data) < 64 and data:
         if datatype == 'email':
