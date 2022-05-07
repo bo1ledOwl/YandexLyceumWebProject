@@ -5,8 +5,8 @@ function verify_data(data, type) {  // проверка данных как в f
   const symbols = 'qwertyuiopasdfghjklzxcvbnm0123456789_-'
   const email_symbols = symbols + '.@'
   const password_symbols = symbols + '.@!#$%^&*(),/'
-  const username_symbols = symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю'
-  const posts_symbols = password_symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю'
+  const username_symbols = symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю '
+  const posts_symbols = password_symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю '
   let data_lower = data.toLowerCase()
   if (data_lower.length < 64 && data != '') {
     if (type == 'email') {
