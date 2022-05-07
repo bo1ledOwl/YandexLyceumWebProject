@@ -7,15 +7,15 @@ function verify_data(data, type) {  // проверка данных как в f
   const password_symbols = symbols + '.@!#$%^&*(),/'
   const username_symbols = symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю'
   const posts_symbols = password_symbols + 'йцукенгшщзхъфывапролджжэячсмитьбю'
-  let data = data.toLowerCase()
-  if (data.length < 64 && data != '') {
+  let data_lower = data.toLowerCase()
+  if (data_lower.length < 64 && data != '') {
     if (type == 'email') {
-      for (var i = 0; i < data.length; i++) if (!email_symbols.includes(data[i])) return false;
-      if (!data.includes('@')) return false;
+      for (var i = 0; i < data_lower.length; i++) if (!email_symbols.includes(data_lower[i])) return false;
+      if (!data_lower.includes('@')) return false;
     }
-    else if (type == 'username') for (var i = 0; i < data.length; i++) if (!username_symbols.includes(data[i])) return false;
-    else if (type == 'password') for (var i = 0; i < data.length; i++) if (!password_symbols.includes(data[i])) return false;
-    else if (type == 'post') for (var i = 0; i < data.length; i++) if (!posts_symbols.includes(data[i])) return false;
+    else if (type == 'username') for (var i = 0; i < data_lower.length; i++) if (!username_symbols.includes(data_lower[i])) return false;
+    else if (type == 'password') for (var i = 0; i < data_lower.length; i++) if (!password_symbols.includes(data_lower[i])) return false;
+    else if (type == 'post') for (var i = 0; i < data_lower.length; i++) if (!posts_symbols.includes(data_lower[i])) return false;
     return true;
   }
   return false;
