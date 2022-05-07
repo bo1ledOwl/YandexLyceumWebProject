@@ -7,7 +7,7 @@ from api.users import RegisterResource, LoginResource, UserResource
 
 from db_data import db_session
 
-app = Flask(__name__, static_url_path='/static')
+app = Flask(__name__)
 api = Api(app)
 
 INCLUDED_PATHS = ('', 'login', 'register', 'user', 'posts')
@@ -28,4 +28,3 @@ api.add_resource(UserResource, '/api/user/<int:user_id>/')
 api.add_resource(PostResource, '/api/post/<int:post_id>/')
 api.add_resource(PostListResource, '/api/posts/<int:user_id>/<int:from_number>/<int:amount>/')
 api.add_resource(PostCreationResource, '/api/posts/create_post/')
-serve(app, port=8080)
