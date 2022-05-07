@@ -60,7 +60,7 @@ function delete_post(post_id) {  // удаление поста
 
 
 function user_details_page(user_id) {  // загрузка информации о пользователе
-  fetch(`${String(window.origin).split('/').slice(0, 3).join('/')}/api/user/${user_id}`, {
+  fetch(`${String(window.origin).split('/').slice(0, 3).join('/')}/api/user/${user_id}/`, {
     method: "GET",
   }).then((res) => {
     res.json().then((data) => {
