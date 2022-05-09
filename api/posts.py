@@ -14,12 +14,18 @@ class PostResource(Resource):
         return make_resp(jsonify(post.to_dict()), 200)
 
     def delete(self, post_id):
-        abort_if_not_found(Post, post_id, 'post')
-        sess = db_session.create_session()
-        post = sess.query(Post).get(post_id)
-        sess.delete(post)
-        sess.commit()
-        return make_resp(jsonify({'message': 'ok'}), 200)
+        token = verify_token()
+        if token:
+            print(token)
+            abort_if_not_found(Post, post_id, 'post')
+            sess = db_session.create_session()
+            post = sess.query(Post).get(post_id)
+            if post.user_id == token['id']:
+                sess.delete(post)
+                sess.commit()
+                return make_resp(jsonify({'message': 'ok'}), 200)
+            abort(400, message="post by another user")
+        abort(401, message='unauthorized')
 
 
 class PostListResource(Resource):
